@@ -1,0 +1,82 @@
+/* .home-container {
+    display: block;
+    height: 100vh;
+    width: 100%; 
+    overflow: hidden;
+  }
+   */
+
+  
+  
+  /* .container {
+    flex: 1;
+    display: flex;
+    padding-top: 80px;
+  }
+  
+  #room__container {
+    display: flex;
+    flex-grow: 1;
+    gap: 3rem;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+  } */
+/* #room__container {
+  display: flex;
+  flex-grow: 1;
+  gap: 3rem;
+  padding: 20px;
+  height: 100vh; 
+  width: 100%;
+  box-sizing: border-box; 
+} */
+
+  
+  /* @media (max-width: 768px) {
+    .container {
+      padding-top: 60px;
+    }
+  }
+   */
+
+   /* Ensure the whole page takes up the full height of the viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+header {
+    flex: 0 1 auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    width: 100%;
+}
+
+#room__container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden; 
+}
+
+#members__container {
+    flex: 1 1 25%; 
+    overflow: auto;
+}
+
+#stream__container {
+    flex: 3 1 75%;
+    overflow: auto;
+}

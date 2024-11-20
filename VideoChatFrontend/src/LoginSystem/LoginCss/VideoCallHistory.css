@@ -1,0 +1,100 @@
+/* Video Call History Styles */
+
+.video-history-container {
+    padding: 10px;
+    height: 685px;
+}
+
+h3 {
+    text-align: center;
+    color: #007bff;
+}
+h4 {
+    text-align: center;
+    color: #007bff;
+}
+
+
+.filter-container {
+    /* position: sticky;
+    top: 20px; */
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filter-input,
+.filter-select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.filter-input::placeholder {
+    color: #999;
+}
+
+
+
+
+
+.video-session-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 7px;
+    justify-items: center; 
+}
+
+.video-session-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    max-width: 300px; 
+}
+
+.participants-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.participant-item {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.pagination {
+    position: fixed;
+    margin-top: 20px;
+    display: flex;
+    justify-content: end;
+    gap: 1px;
+    bottom: 20px;
+    right: 20px;
+}
+
+.pagination-button {
+    bottom: 20px;
+    width: 50px;
+    padding: 2px 4px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pagination-button:hover {
+    background-color: #0056b3;
+}
+
+.pagination-button.active {
+    background-color: #004494;
+}
+

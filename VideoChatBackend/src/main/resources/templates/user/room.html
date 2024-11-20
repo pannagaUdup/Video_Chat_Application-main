@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Room</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='/styles/main.css'> -->
+
+    <link rel='stylesheet' type='text/css' media='screen' href='/styles/room.css'>
+
+</head>
+<body >
+
+    <header >
+        <nav class="header__nav">
+            <h1>Welcome to Video Chat Room</h1>
+            <p>Hi, <strong id="userName" th:text="${user.username}">[username]</strong>!</p> 
+            <!-- <ul>
+                <li><a href="/profiledetails" target="_blank">Profile</a></li>
+                <li><a href="/video-call-history" target="_blank">Chat History</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul> -->
+        </nav>
+    </header>
+
+    <main class="container">
+        <div id="room__container">
+
+            <section id="members__container">
+                <!-- <div>
+                    <button id="generateInviteButton">Generate Invite Code</button>
+                </div> -->
+            
+                <div>
+                    <button id="copyRoomLink" th:attr="onclick='copyRoomLink()'" style="display: none;">copyRoomLink</button>
+                    <div class="share-options">
+                    </div>
+                </div>
+                <div>
+                    <button id="refreshActiveUsers" onclick="refreshActiveUsers()">🔄 Refresh </button>
+                   
+                </div>
+
+                <div id="active-users-list">
+                    <div>
+                        Active Users
+                    </div>
+                </div>
+            </section>
+            
+
+            <section id="stream__container">
+                <div id="stream__box"></div>
+                    <div id="streams__container">
+                    </div>
+                <div class="stream__actions" id="stream-actions" style="display: none;">
+                    <button id="camera-btn" class="active">
+                        <img src="/images/camera_icon.png" alt="camera" title="Camera">
+                    </button>
+                    <button id="mic-btn" class="active">
+                        <img src="/images/mic_icon.png" alt="mic" title="Mic">                    
+                    </button>
+                    <button id="leave-btn" >
+                        <img src="/images/leave_icon.png" alt="leave-room" title="Leave-Room">                    
+                    </button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+
+</body>
+<script>
+        const baseUrl = window.location.origin;
+        // const reactUrl = 'https://training.creditnirvana.ai/register'
+         const reactUrl = 'http://192.168.68.110:3000'
+        // const reactUrl = 'http://localhost:3000'
+
+
+        const streamActions = document.getElementById('stream-actions');
+        const username = document.getElementById('userName').innerText;
+        sessionStorage.setItem('uid', username);
+        function refreshActiveUsers() {
+        const xhr = new XMLHttpRequest(); 
+        xhr.open('GET', '/api/active-users', true); 
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const activeUsers = JSON.parse(xhr.responseText); 
+                const activeUsersList = document.getElementById('active-users-list');
+                activeUsersList.innerHTML = ''; 
+
+                if (activeUsers.length === 0) {
+                    activeUsersList.innerHTML = '<li>No active users.</li>';
+                } else {
+                    activeUsers.forEach(user => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <span>${user.username}</span>
+                            <button id="activeusersbutton" onclick="startCall('${user.username}')">Call</button>
+                        `;
+                        activeUsersList.appendChild(li);
+                    });
+                }
+            } else {
+                console.error('Error fetching active users:', xhr.statusText);
+                document.getElementById('active-users-list').innerHTML = '<li>Error loading active users.</li>';
+            }
+        };
+
+        xhr.onerror = function() {
+            console.error('Request failed');
+            document.getElementById('active-users-list').innerHTML = '<li>Error loading active users.</li>';
+        };
+
+        xhr.send(); 
+    }
+    document.addEventListener('DOMContentLoaded', refreshActiveUsers);
+    setInterval(refreshActiveUsers, 30000);
+
+</script>
+<script type="text/javascript" src="/js/AgoraRTC_N-4.11.0.js"></script>
+<script type="text/javascript" src="/js/room.js"></script>
+<script type="text/javascript" src="/js/room_rtc.js"></script>
+<script>
+    function copyRoomLink() {
+        if(roomId){
+            // const roomLink = `http://localhost:8080/room?room=${roomId}`;
+            const roomLink = window.location.href;
+            navigator.clipboard.writeText(roomLink).then(() => {
+                alert("Room link copied to clipboard!");
+            }, () => {
+                alert("Failed to copy room link. Please try again.");
+            });
+        }
+    }
+</script>
+
+</html>
